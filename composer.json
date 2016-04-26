@@ -3,7 +3,7 @@
     "description": "Purolator Service for shipping",
     "type": "yii2-extension",
     "keywords": ["yii2","extension","purolator","varshaaweblabs"],
-    "license": "BSD-4-Clause",
+    "license": "BSD-3-Clause",
     "authors": [
         {
             "name": "kalpesh",
