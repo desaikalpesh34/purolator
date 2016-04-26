@@ -28,4 +28,4 @@ Usage
 Once the extension is installed, simply use it in your code by  :
 
 ```php
-<?= \desaikalpesh34\purolator\AutoloadExample::widget(); ?>```
+<?= \desaikalpesh34\purolator\AutoloadExample::widget(); ?>
