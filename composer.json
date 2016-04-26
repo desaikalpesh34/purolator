@@ -1,0 +1,21 @@
+{
+    "name": "desaikalpesh34/purolator",
+    "description": "Purolator Service for shipping",
+    "type": "yii2-extension",
+    "keywords": ["yii2","extension","purolator","varshaaweblabs"],
+    "license": "BSD-4-Clause",
+    "authors": [
+        {
+            "name": "kalpesh",
+            "email": "kalpesh@varshaawebteam.com"
+        }
+    ],
+    "require": {
+        "yiisoft/yii2": "^2.0.6"
+     },
+    "autoload": {
+        "psr-4": {
+            "desaikalpesh34\\purolator\\": ""
+        }
+    }
+}

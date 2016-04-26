@@ -1,0 +1,1319 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions name="PickUpService" targetNamespace="http://purolator.com/pws/service/v1" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:tns="http://purolator.com/pws/service/v1" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:wsx="http://schemas.xmlsoap.org/ws/2004/09/mex" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata">
+	<wsdl:types>
+		<xs:schema attributeFormDefault="qualified" elementFormDefault="qualified" targetNamespace="http://schemas.microsoft.com/2003/10/Serialization/" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://schemas.microsoft.com/2003/10/Serialization/">
+			<xs:element name="anyType" nillable="true" type="xs:anyType"/>
+			<xs:element name="anyURI" nillable="true" type="xs:anyURI"/>
+			<xs:element name="base64Binary" nillable="true" type="xs:base64Binary"/>
+			<xs:element name="boolean" nillable="true" type="xs:boolean"/>
+			<xs:element name="byte" nillable="true" type="xs:byte"/>
+			<xs:element name="dateTime" nillable="true" type="xs:dateTime"/>
+			<xs:element name="decimal" nillable="true" type="xs:decimal"/>
+			<xs:element name="double" nillable="true" type="xs:double"/>
+			<xs:element name="float" nillable="true" type="xs:float"/>
+			<xs:element name="int" nillable="true" type="xs:int"/>
+			<xs:element name="long" nillable="true" type="xs:long"/>
+			<xs:element name="QName" nillable="true" type="xs:QName"/>
+			<xs:element name="short" nillable="true" type="xs:short"/>
+			<xs:element name="string" nillable="true" type="xs:string"/>
+			<xs:element name="unsignedByte" nillable="true" type="xs:unsignedByte"/>
+			<xs:element name="unsignedInt" nillable="true" type="xs:unsignedInt"/>
+			<xs:element name="unsignedLong" nillable="true" type="xs:unsignedLong"/>
+			<xs:element name="unsignedShort" nillable="true" type="xs:unsignedShort"/>
+			<xs:element name="char" nillable="true" type="tns:char"/>
+			<xs:simpleType name="char">
+				<xs:restriction base="xs:int"/>
+			</xs:simpleType>
+			<xs:element name="duration" nillable="true" type="tns:duration"/>
+			<xs:simpleType name="duration">
+				<xs:restriction base="xs:duration">
+					<xs:pattern value="\-?P(\d*D)?(T(\d*H)?(\d*M)?(\d*(\.\d*)?S)?)?"/>
+					<xs:minInclusive value="-P10675199DT2H48M5.4775808S"/>
+					<xs:maxInclusive value="P10675199DT2H48M5.4775807S"/>
+				</xs:restriction>
+			</xs:simpleType>
+			<xs:element name="guid" nillable="true" type="tns:guid"/>
+			<xs:simpleType name="guid">
+				<xs:restriction base="xs:string">
+					<xs:pattern value="[\da-fA-F]{8}-[\da-fA-F]{4}-[\da-fA-F]{4}-[\da-fA-F]{4}-[\da-fA-F]{12}"/>
+				</xs:restriction>
+			</xs:simpleType>
+			<xs:attribute name="FactoryType" type="xs:QName"/>
+			<xs:attribute name="Id" type="xs:ID"/>
+			<xs:attribute name="Ref" type="xs:IDREF"/>
+		</xs:schema>
+		<xsd:schema elementFormDefault="qualified" targetNamespace="http://purolator.com/pws/datatypes/v1" xmlns:tns="http://purolator.com/pws/datatypes/v1">
+			<xsd:complexType name="SchedulePickUpRequestContainer">
+				<xsd:annotation>
+					<xsd:appinfo/>
+					<xsd:documentation>SchedulePickUpRequest</xsd:documentation>
+				</xsd:annotation>
+				<xsd:complexContent mixed="false">
+					<xsd:extension base="tns:RequestContainer">
+						<xsd:sequence>
+							<xsd:element name="BillingAccountNumber" nillable="true" type="xsd:string">
+								<xsd:annotation>
+									<xsd:appinfo/>
+									<xsd:documentation>AccountNumber - string</xsd:documentation>
+								</xsd:annotation>
+							</xsd:element>
+							<xsd:element minOccurs="0" name="PartnerID" nillable="true" type="xsd:string">
+								<xsd:annotation>
+									<xsd:appinfo/>
+									<xsd:documentation>PartnerID - string</xsd:documentation>
+								</xsd:annotation>
+							</xsd:element>
+							<xsd:element name="PickupInstruction" nillable="true" type="tns:PickupInstruction">
+								<xsd:annotation>
+									<xsd:appinfo/>
+									<xsd:documentation>PickupInstruction - PickupInstruction</xsd:documentation>
+								</xsd:annotation>
+							</xsd:element>
+							<xsd:element name="Address" nillable="true" type="tns:Address">
+								<xsd:annotation>
+									<xsd:appinfo/>
+									<xsd:documentation>Address - Address</xsd:documentation>
+								</xsd:annotation>
+							</xsd:element>
+							<xsd:element minOccurs="0" name="ShipmentSummary" nillable="true" type="tns:ShipmentSummary">
+								<xsd:annotation>
+									<xsd:appinfo/>
+									<xsd:documentation>ShipmentSummary - ShipmentSummary</xsd:documentation>
+								</xsd:annotation>
+							</xsd:element>
+							<xsd:element minOccurs="0" name="NotificationEmails" nillable="true" type="tns:NotificationEmails">
+								<xsd:annotation>
+									<xsd:appinfo/>
+									<xsd:documentation>NotificationEmails - NotificationEmail[]</xsd:documentation>
+								</xsd:annotation>
+							</xsd:element>
+						</xsd:sequence>
+					</xsd:extension>
+				</xsd:complexContent>
+			</xsd:complexType>
+			<xsd:element name="SchedulePickUpRequestContainer" nillable="true" type="tns:SchedulePickUpRequestContainer"/>
+			<xsd:complexType name="RequestContainer">
+				<xsd:sequence/>
+			</xsd:complexType>
+			<xsd:element name="RequestContainer" nillable="true" type="tns:RequestContainer"/>
+			<xsd:complexType name="PickupInstruction">
+				<xsd:annotation>
+					<xsd:appinfo/>
+					<xsd:documentation>PickupInstruction</xsd:documentation>
+				</xsd:annotation>
+				<xsd:sequence>
+					<xsd:element name="Date" nillable="true" type="xsd:string">
+						<xsd:annotation>
+							<xsd:appinfo/>
+							<xsd:documentation>String - Date</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+					<xsd:element name="AnyTimeAfter" nillable="true" type="xsd:string">
+						<xsd:annotation>
+							<xsd:appinfo/>
+							<xsd:documentation>String - AnyTimeAfter</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+					<xsd:element name="UntilTime" nillable="true" type="xsd:string">
+						<xsd:annotation>
+							<xsd:appinfo/>
+							<xsd:documentation>String - UntilTime</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+					<xsd:element minOccurs="0" name="TotalWeight" nillable="true" type="tns:Weight">
+						<xsd:annotation>
+							<xsd:appinfo/>
+							<xsd:documentation>Weight - TotalWeight</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+					<xsd:element minOccurs="0" name="TotalPieces" type="xsd:int">
+						<xsd:annotation>
+							<xsd:appinfo/>
+							<xsd:documentation>int - TotalPieces</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+					<xsd:element minOccurs="0" name="BoxesIndicator" nillable="true" type="xsd:string">
+						<xsd:annotation>
+							<xsd:appinfo/>
+							<xsd:documentation>String? - BoxesIndicator</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+					<xsd:element minOccurs="0" name="PickUpLocation" nillable="true" type="xsd:string">
+						<xsd:annotation>
+							<xsd:appinfo/>
+							<xsd:documentation>String? - PhysicalLocation</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+					<xsd:element minOccurs="0" name="AdditionalInstructions" nillable="true" type="xsd:string">
+						<xsd:annotation>
+							<xsd:appinfo/>
+							<xsd:documentation>String? - AdditionalInstructions</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+					<xsd:element minOccurs="0" name="SupplyRequestCodes" nillable="true" type="tns:SupplyRequestCodes">
+						<xsd:annotation>
+							<xsd:appinfo/>
+							<xsd:documentation>SupplyRequestCodes - string[]</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+					<xsd:element minOccurs="0" name="TrailerAccessible" type="xsd:boolean">
+						<xsd:annotation>
+							<xsd:appinfo/>
+							<xsd:documentation>bool - TrailerAccessible</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+					<xsd:element minOccurs="0" name="LoadingDockAvailable" type="xsd:boolean">
+						<xsd:annotation>
+							<xsd:appinfo/>
+							<xsd:documentation>bool - LoadingDockAvailable</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+					<xsd:element minOccurs="0" name="ShipmentOnSkids" type="xsd:boolean">
+						<xsd:annotation>
+							<xsd:appinfo/>
+							<xsd:documentation>bool - ShipmentOnSkids</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+					<xsd:element minOccurs="0" name="NumberOfSkids" nillable="true" type="xsd:int">
+						<xsd:annotation>
+							<xsd:appinfo/>
+							<xsd:documentation>int? - NumberOfSkids</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+				</xsd:sequence>
+			</xsd:complexType>
+			<xsd:element name="PickupInstruction" nillable="true" type="tns:PickupInstruction"/>
+			<xsd:complexType name="Weight">
+				<xsd:annotation>
+					<xsd:appinfo/>
+					<xsd:documentation>Weight</xsd:documentation>
+				</xsd:annotation>
+				<xsd:sequence>
+					<xsd:element name="Value" nillable="true" type="xsd:decimal">
+						<xsd:annotation>
+							<xsd:appinfo/>
+							<xsd:documentation>Value - decimal</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+					<xsd:element name="WeightUnit" type="tns:WeightUnit">
+						<xsd:annotation>
+							<xsd:appinfo/>
+							<xsd:documentation>WeightUnit - WeightUnit</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+				</xsd:sequence>
+			</xsd:complexType>
+			<xsd:element name="Weight" nillable="true" type="tns:Weight"/>
+			<xsd:simpleType name="WeightUnit">
+				<xsd:annotation>
+					<xsd:appinfo/>
+					<xsd:documentation>WeightUnit - enum</xsd:documentation>
+				</xsd:annotation>
+				<xsd:restriction base="xsd:string">
+					<xsd:enumeration value="lb">
+						<xsd:annotation>
+							<xsd:documentation>lb</xsd:documentation>
+						</xsd:annotation>
+					</xsd:enumeration>
+					<xsd:enumeration value="kg">
+						<xsd:annotation>
+							<xsd:documentation>kg</xsd:documentation>
+						</xsd:annotation>
+					</xsd:enumeration>
+				</xsd:restriction>
+			</xsd:simpleType>
+			<xsd:element name="WeightUnit" nillable="true" type="tns:WeightUnit"/>
+			<xsd:complexType name="SupplyRequestCodes">
+				<xsd:annotation>
+					<xsd:appinfo>
+						<GenericType Name="SupplyRequestCodes" Namespace="http://purolator.com/pws/datatypes/v1" xmlns="http://schemas.microsoft.com/2003/10/Serialization/">
+							<GenericParameter Name="string" Namespace="http://www.w3.org/2001/XMLSchema"/>
+						</GenericType>
+					</xsd:appinfo>
+				</xsd:annotation>
+				<xsd:sequence>
+					<xsd:element minOccurs="0" maxOccurs="unbounded" name="SupplyRequestCode" nillable="true" type="xsd:string"/>
+				</xsd:sequence>
+			</xsd:complexType>
+			<xsd:element name="SupplyRequestCodes" nillable="true" type="tns:SupplyRequestCodes"/>
+			<xsd:complexType name="Address">
+				<xsd:annotation>
+					<xsd:appinfo/>
+					<xsd:documentation>Address</xsd:documentation>
+				</xsd:annotation>
+				<xsd:sequence>
+					<xsd:element name="Name" nillable="true" type="xsd:string">
+						<xsd:annotation>
+							<xsd:appinfo/>
+							<xsd:documentation>Name - string</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+					<xsd:element minOccurs="0" name="Company" nillable="true" type="xsd:string">
+						<xsd:annotation>
+							<xsd:appinfo/>
+							<xsd:documentation>Company - string</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+					<xsd:element minOccurs="0" name="Department" nillable="true" type="xsd:string">
+						<xsd:annotation>
+							<xsd:appinfo/>
+							<xsd:documentation>Department - string</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+					<xsd:element name="StreetNumber" nillable="true" type="xsd:string">
+						<xsd:annotation>
+							<xsd:appinfo/>
+							<xsd:documentation>StreetNumber - string</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+					<xsd:element minOccurs="0" name="StreetSuffix" nillable="true" type="xsd:string">
+						<xsd:annotation>
+							<xsd:appinfo/>
+							<xsd:documentation>StreetSuffix - string</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+					<xsd:element name="StreetName" nillable="true" type="xsd:string">
+						<xsd:annotation>
+							<xsd:appinfo/>
+							<xsd:documentation>StreetName - string</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+					<xsd:element minOccurs="0" name="StreetType" nillable="true" type="xsd:string">
+						<xsd:annotation>
+							<xsd:appinfo/>
+							<xsd:documentation>StreetType - string</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+					<xsd:element minOccurs="0" name="StreetDirection" nillable="true" type="xsd:string">
+						<xsd:annotation>
+							<xsd:appinfo/>
+							<xsd:documentation>StreetDirection - string</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+					<xsd:element minOccurs="0" name="Suite" nillable="true" type="xsd:string">
+						<xsd:annotation>
+							<xsd:appinfo/>
+							<xsd:documentation>Suite - string</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+					<xsd:element minOccurs="0" name="Floor" nillable="true" type="xsd:string">
+						<xsd:annotation>
+							<xsd:appinfo/>
+							<xsd:documentation>Floor - string</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+					<xsd:element minOccurs="0" name="StreetAddress2" nillable="true" type="xsd:string">
+						<xsd:annotation>
+							<xsd:appinfo/>
+							<xsd:documentation>StreetAddress2 - string</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+					<xsd:element minOccurs="0" name="StreetAddress3" nillable="true" type="xsd:string">
+						<xsd:annotation>
+							<xsd:appinfo/>
+							<xsd:documentation>StreetAddress3 - string</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+					<xsd:element name="City" nillable="true" type="xsd:string">
+						<xsd:annotation>
+							<xsd:appinfo/>
+							<xsd:documentation>City - string</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+					<xsd:element name="Province" nillable="true" type="xsd:string">
+						<xsd:annotation>
+							<xsd:appinfo/>
+							<xsd:documentation>Province - string</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+					<xsd:element name="Country" nillable="true" type="xsd:string">
+						<xsd:annotation>
+							<xsd:appinfo/>
+							<xsd:documentation>Country - string</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+					<xsd:element name="PostalCode" nillable="true" type="xsd:string">
+						<xsd:annotation>
+							<xsd:appinfo/>
+							<xsd:documentation>PostalCode - string</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+					<xsd:element name="PhoneNumber" nillable="true" type="tns:PhoneNumber">
+						<xsd:annotation>
+							<xsd:appinfo/>
+							<xsd:documentation>PhoneNumber - PhoneNumber</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+					<xsd:element minOccurs="0" name="FaxNumber" nillable="true" type="tns:PhoneNumber">
+						<xsd:annotation>
+							<xsd:appinfo/>
+							<xsd:documentation>Faxnumber - PhoneNumber</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+				</xsd:sequence>
+			</xsd:complexType>
+			<xsd:element name="Address" nillable="true" type="tns:Address"/>
+			<xsd:complexType name="PhoneNumber">
+				<xsd:annotation>
+					<xsd:appinfo/>
+					<xsd:documentation>PhoneNumber</xsd:documentation>
+				</xsd:annotation>
+				<xsd:sequence>
+					<xsd:element name="CountryCode" nillable="true" type="xsd:string">
+						<xsd:annotation>
+							<xsd:appinfo/>
+							<xsd:documentation>CountryCode - string</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+					<xsd:element name="AreaCode" nillable="true" type="xsd:string">
+						<xsd:annotation>
+							<xsd:appinfo/>
+							<xsd:documentation>AreaCode - string</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+					<xsd:element name="Phone" nillable="true" type="xsd:string">
+						<xsd:annotation>
+							<xsd:appinfo/>
+							<xsd:documentation>Phone - string</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+					<xsd:element minOccurs="0" name="Extension" nillable="true" type="xsd:string">
+						<xsd:annotation>
+							<xsd:appinfo/>
+							<xsd:documentation>Extension - string</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+				</xsd:sequence>
+			</xsd:complexType>
+			<xsd:element name="PhoneNumber" nillable="true" type="tns:PhoneNumber"/>
+			<xsd:complexType name="ShipmentSummary">
+				<xsd:annotation>
+					<xsd:appinfo/>
+					<xsd:documentation>Shipment Summary</xsd:documentation>
+				</xsd:annotation>
+				<xsd:sequence>
+					<xsd:element name="ShipmentSummaryDetails" nillable="true" type="tns:ArrayOfShipmentSummaryDetail">
+						<xsd:annotation>
+							<xsd:appinfo/>
+							<xsd:documentation>ShipmentSummaryDetail - ShipmentSummaryDetail</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+				</xsd:sequence>
+			</xsd:complexType>
+			<xsd:element name="ShipmentSummary" nillable="true" type="tns:ShipmentSummary"/>
+			<xsd:complexType name="ArrayOfShipmentSummaryDetail">
+				<xsd:sequence>
+					<xsd:element minOccurs="0" maxOccurs="unbounded" name="ShipmentSummaryDetail" nillable="true" type="tns:ShipmentSummaryDetail"/>
+				</xsd:sequence>
+			</xsd:complexType>
+			<xsd:element name="ArrayOfShipmentSummaryDetail" nillable="true" type="tns:ArrayOfShipmentSummaryDetail"/>
+			<xsd:complexType name="ShipmentSummaryDetail">
+				<xsd:annotation>
+					<xsd:appinfo/>
+					<xsd:documentation>Shipment Summary</xsd:documentation>
+				</xsd:annotation>
+				<xsd:sequence>
+					<xsd:element name="DestinationCode" nillable="true" type="xsd:string">
+						<xsd:annotation>
+							<xsd:appinfo/>
+							<xsd:documentation>String - DestinationCode</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+					<xsd:element minOccurs="0" name="ModeOfTransport" nillable="true" type="xsd:string">
+						<xsd:annotation>
+							<xsd:appinfo/>
+							<xsd:documentation>String - ModeOfTransport</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+					<xsd:element name="TotalPieces" type="xsd:int">
+						<xsd:annotation>
+							<xsd:appinfo/>
+							<xsd:documentation>Weight - TotalWeight</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+					<xsd:element name="TotalWeight" nillable="true" type="tns:Weight">
+						<xsd:annotation>
+							<xsd:appinfo/>
+							<xsd:documentation>Int - TotalPieces</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+				</xsd:sequence>
+			</xsd:complexType>
+			<xsd:element name="ShipmentSummaryDetail" nillable="true" type="tns:ShipmentSummaryDetail"/>
+			<xsd:complexType name="NotificationEmails">
+				<xsd:annotation>
+					<xsd:appinfo>
+						<GenericType Name="NotificationEmails" Namespace="http://purolator.com/pws/datatypes/v1" xmlns="http://schemas.microsoft.com/2003/10/Serialization/">
+							<GenericParameter Name="string" Namespace="http://www.w3.org/2001/XMLSchema"/>
+						</GenericType>
+					</xsd:appinfo>
+				</xsd:annotation>
+				<xsd:sequence>
+					<xsd:element minOccurs="0" maxOccurs="unbounded" name="NotificationEmail" nillable="true" type="xsd:string"/>
+				</xsd:sequence>
+			</xsd:complexType>
+			<xsd:element name="NotificationEmails" nillable="true" type="tns:NotificationEmails"/>
+			<xsd:element name="SchedulePickUpRequest" nillable="true" type="tns:SchedulePickUpRequestContainer"/>
+			<xsd:complexType name="RequestContext">
+				<xsd:annotation>
+					<xsd:appinfo/>
+					<xsd:documentation>RequestContext</xsd:documentation>
+				</xsd:annotation>
+				<xsd:sequence>
+					<xsd:element name="Version" nillable="true" type="xsd:string">
+						<xsd:annotation>
+							<xsd:appinfo/>
+							<xsd:documentation>Version - string</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+					<xsd:element name="Language" type="tns:Language">
+						<xsd:annotation>
+							<xsd:appinfo/>
+							<xsd:documentation>Language - string</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+					<xsd:element name="GroupID" nillable="true" type="xsd:string">
+						<xsd:annotation>
+							<xsd:appinfo/>
+							<xsd:documentation>GroupID - string</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+					<xsd:element name="RequestReference" nillable="true" type="xsd:string">
+						<xsd:annotation>
+							<xsd:appinfo/>
+							<xsd:documentation>RequestReference - string</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+					<xsd:element minOccurs="0" name="UserToken" nillable="true" type="xsd:string">
+						<xsd:annotation>
+							<xsd:appinfo/>
+							<xsd:documentation>UserToken - string</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+				</xsd:sequence>
+			</xsd:complexType>
+			<xsd:element name="RequestContext" nillable="true" type="tns:RequestContext"/>
+			<xsd:simpleType name="Language">
+				<xsd:annotation>
+					<xsd:appinfo/>
+					<xsd:documentation>Language - enum</xsd:documentation>
+				</xsd:annotation>
+				<xsd:restriction base="xsd:string">
+					<xsd:enumeration value="en">
+						<xsd:annotation>
+							<xsd:documentation>en</xsd:documentation>
+						</xsd:annotation>
+					</xsd:enumeration>
+					<xsd:enumeration value="fr">
+						<xsd:annotation>
+							<xsd:documentation>fr</xsd:documentation>
+						</xsd:annotation>
+					</xsd:enumeration>
+				</xsd:restriction>
+			</xsd:simpleType>
+			<xsd:element name="Language" nillable="true" type="tns:Language"/>
+			<xsd:complexType name="SchedulePickUpResponseContainer">
+				<xsd:annotation>
+					<xsd:appinfo/>
+					<xsd:documentation>SchedulePickUpRespone</xsd:documentation>
+				</xsd:annotation>
+				<xsd:complexContent mixed="false">
+					<xsd:extension base="tns:ResponseContainer">
+						<xsd:sequence>
+							<xsd:element minOccurs="0" name="PickUpConfirmationNumber" nillable="true" type="xsd:string">
+								<xsd:annotation>
+									<xsd:appinfo/>
+									<xsd:documentation>PickUpConfirmationNumber - string</xsd:documentation>
+								</xsd:annotation>
+							</xsd:element>
+						</xsd:sequence>
+					</xsd:extension>
+				</xsd:complexContent>
+			</xsd:complexType>
+			<xsd:element name="SchedulePickUpResponseContainer" nillable="true" type="tns:SchedulePickUpResponseContainer"/>
+			<xsd:complexType name="ResponseContainer">
+				<xsd:sequence>
+					<xsd:element name="ResponseInformation" nillable="true" type="tns:ResponseInformation">
+						<xsd:annotation>
+							<xsd:appinfo/>
+							<xsd:documentation>ResponseInformation - ResponseInformation</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+				</xsd:sequence>
+			</xsd:complexType>
+			<xsd:element name="ResponseContainer" nillable="true" type="tns:ResponseContainer"/>
+			<xsd:complexType name="ResponseInformation">
+				<xsd:annotation>
+					<xsd:appinfo/>
+					<xsd:documentation>ResponseInformation</xsd:documentation>
+				</xsd:annotation>
+				<xsd:sequence>
+					<xsd:element name="Errors" nillable="true" type="tns:ArrayOfError">
+						<xsd:annotation>
+							<xsd:appinfo/>
+							<xsd:documentation>Errors - Error[]</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+					<xsd:element name="InformationalMessages" nillable="true" type="tns:ArrayOfInformationalMessage">
+						<xsd:annotation>
+							<xsd:appinfo/>
+							<xsd:documentation>InformationalMessages - InformationalMessage[]</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+				</xsd:sequence>
+			</xsd:complexType>
+			<xsd:element name="ResponseInformation" nillable="true" type="tns:ResponseInformation"/>
+			<xsd:complexType name="ArrayOfError">
+				<xsd:sequence>
+					<xsd:element minOccurs="0" maxOccurs="unbounded" name="Error" nillable="true" type="tns:Error"/>
+				</xsd:sequence>
+			</xsd:complexType>
+			<xsd:element name="ArrayOfError" nillable="true" type="tns:ArrayOfError"/>
+			<xsd:complexType name="Error">
+				<xsd:annotation>
+					<xsd:appinfo/>
+					<xsd:documentation>Error</xsd:documentation>
+				</xsd:annotation>
+				<xsd:sequence>
+					<xsd:element name="Code" nillable="true" type="xsd:string">
+						<xsd:annotation>
+							<xsd:appinfo/>
+							<xsd:documentation>Code - string</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+					<xsd:element name="Description" nillable="true" type="xsd:string">
+						<xsd:annotation>
+							<xsd:appinfo/>
+							<xsd:documentation>Description - string</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+					<xsd:element name="AdditionalInformation" nillable="true" type="xsd:string">
+						<xsd:annotation>
+							<xsd:appinfo/>
+							<xsd:documentation>AdditionalInformation - string</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+				</xsd:sequence>
+			</xsd:complexType>
+			<xsd:element name="Error" nillable="true" type="tns:Error"/>
+			<xsd:complexType name="ArrayOfInformationalMessage">
+				<xsd:sequence>
+					<xsd:element minOccurs="0" maxOccurs="unbounded" name="InformationalMessage" nillable="true" type="tns:InformationalMessage"/>
+				</xsd:sequence>
+			</xsd:complexType>
+			<xsd:element name="ArrayOfInformationalMessage" nillable="true" type="tns:ArrayOfInformationalMessage"/>
+			<xsd:complexType name="InformationalMessage">
+				<xsd:annotation>
+					<xsd:appinfo/>
+					<xsd:documentation>InformationalMessage</xsd:documentation>
+				</xsd:annotation>
+				<xsd:sequence>
+					<xsd:element name="Code" nillable="true" type="xsd:string">
+						<xsd:annotation>
+							<xsd:appinfo/>
+							<xsd:documentation>Code - string</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+					<xsd:element name="Message" nillable="true" type="xsd:string">
+						<xsd:annotation>
+							<xsd:appinfo/>
+							<xsd:documentation>Message - string</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+				</xsd:sequence>
+			</xsd:complexType>
+			<xsd:element name="InformationalMessage" nillable="true" type="tns:InformationalMessage"/>
+			<xsd:element name="SchedulePickUpResponse" nillable="true" type="tns:SchedulePickUpResponseContainer"/>
+			<xsd:complexType name="ResponseContext">
+				<xsd:annotation>
+					<xsd:appinfo/>
+					<xsd:documentation>ResponseContext</xsd:documentation>
+				</xsd:annotation>
+				<xsd:sequence>
+					<xsd:element name="ResponseReference" nillable="true" type="xsd:string">
+						<xsd:annotation>
+							<xsd:appinfo/>
+							<xsd:documentation>ResponseReference - string</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+				</xsd:sequence>
+			</xsd:complexType>
+			<xsd:element name="ResponseContext" nillable="true" type="tns:ResponseContext"/>
+			<xsd:complexType name="VoidPickUpRequestContainer">
+				<xsd:annotation>
+					<xsd:appinfo/>
+					<xsd:documentation>VoidPickUpRequest</xsd:documentation>
+				</xsd:annotation>
+				<xsd:complexContent mixed="false">
+					<xsd:extension base="tns:RequestContainer">
+						<xsd:sequence>
+							<xsd:element minOccurs="0" name="PickUpConfirmationNumber" nillable="true" type="xsd:string">
+								<xsd:annotation>
+									<xsd:appinfo/>
+									<xsd:documentation>PickUpConfirmationNumber - string</xsd:documentation>
+								</xsd:annotation>
+							</xsd:element>
+						</xsd:sequence>
+					</xsd:extension>
+				</xsd:complexContent>
+			</xsd:complexType>
+			<xsd:element name="VoidPickUpRequestContainer" nillable="true" type="tns:VoidPickUpRequestContainer"/>
+			<xsd:element name="VoidPickUpRequest" nillable="true" type="tns:VoidPickUpRequestContainer"/>
+			<xsd:complexType name="VoidPickUpResponseContainer">
+				<xsd:annotation>
+					<xsd:appinfo/>
+					<xsd:documentation>VoidPickUpRespone</xsd:documentation>
+				</xsd:annotation>
+				<xsd:complexContent mixed="false">
+					<xsd:extension base="tns:ResponseContainer">
+						<xsd:sequence>
+							<xsd:element minOccurs="0" name="PickUpVoided" type="xsd:boolean">
+								<xsd:annotation>
+									<xsd:appinfo/>
+									<xsd:documentation>PickUpVoided - bool</xsd:documentation>
+								</xsd:annotation>
+							</xsd:element>
+						</xsd:sequence>
+					</xsd:extension>
+				</xsd:complexContent>
+			</xsd:complexType>
+			<xsd:element name="VoidPickUpResponseContainer" nillable="true" type="tns:VoidPickUpResponseContainer"/>
+			<xsd:element name="VoidPickUpResponse" nillable="true" type="tns:VoidPickUpResponseContainer"/>
+			<xsd:complexType name="ValidatePickUpRequestContainer">
+				<xsd:annotation>
+					<xsd:appinfo/>
+					<xsd:documentation>ValidatePickUpRequestContainer</xsd:documentation>
+				</xsd:annotation>
+				<xsd:complexContent mixed="false">
+					<xsd:extension base="tns:RequestContainer">
+						<xsd:sequence>
+							<xsd:element name="BillingAccountNumber" nillable="true" type="xsd:string">
+								<xsd:annotation>
+									<xsd:appinfo/>
+									<xsd:documentation>BillingAccountNumber - string</xsd:documentation>
+								</xsd:annotation>
+							</xsd:element>
+							<xsd:element minOccurs="0" name="PartnerID" nillable="true" type="xsd:string">
+								<xsd:annotation>
+									<xsd:appinfo/>
+									<xsd:documentation>PartnerID - string</xsd:documentation>
+								</xsd:annotation>
+							</xsd:element>
+							<xsd:element name="PickupInstruction" nillable="true" type="tns:PickupInstruction">
+								<xsd:annotation>
+									<xsd:appinfo/>
+									<xsd:documentation>PickupInstruction - PickupInstruction</xsd:documentation>
+								</xsd:annotation>
+							</xsd:element>
+							<xsd:element name="Address" nillable="true" type="tns:Address">
+								<xsd:annotation>
+									<xsd:appinfo/>
+									<xsd:documentation>Address - Address</xsd:documentation>
+								</xsd:annotation>
+							</xsd:element>
+							<xsd:element minOccurs="0" name="ShipmentSummary" nillable="true" type="tns:ShipmentSummary">
+								<xsd:annotation>
+									<xsd:appinfo/>
+									<xsd:documentation>ShipmentSummary - ShipmentSummary</xsd:documentation>
+								</xsd:annotation>
+							</xsd:element>
+							<xsd:element minOccurs="0" name="NotificationEmails" nillable="true" type="tns:NotificationEmails">
+								<xsd:annotation>
+									<xsd:appinfo/>
+									<xsd:documentation>NotificationEmails - NotificationEmail[]</xsd:documentation>
+								</xsd:annotation>
+							</xsd:element>
+						</xsd:sequence>
+					</xsd:extension>
+				</xsd:complexContent>
+			</xsd:complexType>
+			<xsd:element name="ValidatePickUpRequestContainer" nillable="true" type="tns:ValidatePickUpRequestContainer"/>
+			<xsd:element name="ValidatePickUpRequest" nillable="true" type="tns:ValidatePickUpRequestContainer"/>
+			<xsd:complexType name="ValidatePickUpResponseContainer">
+				<xsd:annotation>
+					<xsd:appinfo/>
+					<xsd:documentation>ValidatePickUpRespone</xsd:documentation>
+				</xsd:annotation>
+				<xsd:complexContent mixed="false">
+					<xsd:extension base="tns:ResponseContainer">
+						<xsd:sequence>
+							<xsd:element name="IsBulkdRequired" type="xsd:boolean">
+								<xsd:annotation>
+									<xsd:appinfo/>
+									<xsd:documentation>IsBulkdRequired - boolean</xsd:documentation>
+								</xsd:annotation>
+							</xsd:element>
+							<xsd:element name="CutOffTime" nillable="true" type="xsd:string">
+								<xsd:annotation>
+									<xsd:appinfo/>
+									<xsd:documentation>CutOffTime - string</xsd:documentation>
+								</xsd:annotation>
+							</xsd:element>
+							<xsd:element name="CutOffWindow" type="xsd:int">
+								<xsd:annotation>
+									<xsd:appinfo/>
+									<xsd:documentation>CutOffWindow - int</xsd:documentation>
+								</xsd:annotation>
+							</xsd:element>
+							<xsd:element name="BulkMaxWeight" type="xsd:decimal">
+								<xsd:annotation>
+									<xsd:appinfo/>
+									<xsd:documentation>BulkMaxWeight - decimal</xsd:documentation>
+								</xsd:annotation>
+							</xsd:element>
+							<xsd:element name="BulkMaxPackages" type="xsd:int">
+								<xsd:annotation>
+									<xsd:appinfo/>
+									<xsd:documentation>BulkMaxPackages - int</xsd:documentation>
+								</xsd:annotation>
+							</xsd:element>
+						</xsd:sequence>
+					</xsd:extension>
+				</xsd:complexContent>
+			</xsd:complexType>
+			<xsd:element name="ValidatePickUpResponseContainer" nillable="true" type="tns:ValidatePickUpResponseContainer"/>
+			<xsd:element name="ValidatePickUpResponse" nillable="true" type="tns:ValidatePickUpResponseContainer"/>
+			<xsd:complexType name="GetPickUpHistoryRequestContainer">
+				<xsd:annotation>
+					<xsd:appinfo/>
+					<xsd:documentation>GetPickUpHistoryRequestContainer</xsd:documentation>
+				</xsd:annotation>
+				<xsd:complexContent mixed="false">
+					<xsd:extension base="tns:RequestContainer">
+						<xsd:sequence>
+							<xsd:element name="PickUpHistorySearchCriteria" nillable="true" type="tns:PickUpHistorySearchCriteria">
+								<xsd:annotation>
+									<xsd:appinfo/>
+									<xsd:documentation>PickUpHistorySearchCriteria - PickUpHistorySearchCriteria</xsd:documentation>
+								</xsd:annotation>
+							</xsd:element>
+						</xsd:sequence>
+					</xsd:extension>
+				</xsd:complexContent>
+			</xsd:complexType>
+			<xsd:element name="GetPickUpHistoryRequestContainer" nillable="true" type="tns:GetPickUpHistoryRequestContainer"/>
+			<xsd:complexType name="PickUpHistorySearchCriteria">
+				<xsd:annotation>
+					<xsd:appinfo/>
+					<xsd:documentation>PickUpHistorySearchCriteria</xsd:documentation>
+				</xsd:annotation>
+				<xsd:sequence>
+					<xsd:element name="FromDate" nillable="true" type="xsd:string">
+						<xsd:annotation>
+							<xsd:appinfo/>
+							<xsd:documentation>FromDate</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+					<xsd:element name="ToDate" nillable="true" type="xsd:string">
+						<xsd:annotation>
+							<xsd:appinfo/>
+							<xsd:documentation>ToDate</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+					<xsd:element minOccurs="0" name="ConfirmationNumber" nillable="true" type="xsd:string">
+						<xsd:annotation>
+							<xsd:appinfo/>
+							<xsd:documentation>ConfirmationNumber</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+					<xsd:element name="AccountNumber" nillable="true" type="xsd:string">
+						<xsd:annotation>
+							<xsd:appinfo/>
+							<xsd:documentation>AccountNumber</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+					<xsd:element minOccurs="0" name="Status" nillable="true" type="xsd:string">
+						<xsd:annotation>
+							<xsd:appinfo/>
+							<xsd:documentation>Status</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+					<xsd:element minOccurs="0" name="MaxNumOfRecords" type="xsd:int">
+						<xsd:annotation>
+							<xsd:appinfo/>
+							<xsd:documentation>MaxNumOfRecords</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+					<xsd:element minOccurs="0" name="SortColumn" nillable="true" type="xsd:string">
+						<xsd:annotation>
+							<xsd:appinfo/>
+							<xsd:documentation>SortColumn</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+					<xsd:element minOccurs="0" name="SortDirection" nillable="true" type="xsd:string">
+						<xsd:annotation>
+							<xsd:appinfo/>
+							<xsd:documentation>SortDirection</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+				</xsd:sequence>
+			</xsd:complexType>
+			<xsd:element name="PickUpHistorySearchCriteria" nillable="true" type="tns:PickUpHistorySearchCriteria"/>
+			<xsd:element name="GetPickUpHistoryRequest" nillable="true" type="tns:GetPickUpHistoryRequestContainer"/>
+			<xsd:complexType name="GetPickUpHistoryResponseContainer">
+				<xsd:annotation>
+					<xsd:appinfo/>
+					<xsd:documentation>Service Contract Class - GetPickUpHistoryResponseContainer</xsd:documentation>
+				</xsd:annotation>
+				<xsd:complexContent mixed="false">
+					<xsd:extension base="tns:ResponseContainer">
+						<xsd:sequence>
+							<xsd:element minOccurs="0" name="PickUpDetailList" nillable="true" type="tns:ArrayOfPickUpDetail">
+								<xsd:annotation>
+									<xsd:appinfo/>
+									<xsd:documentation>PickUpDetailList - PickUpDetail[]</xsd:documentation>
+								</xsd:annotation>
+							</xsd:element>
+						</xsd:sequence>
+					</xsd:extension>
+				</xsd:complexContent>
+			</xsd:complexType>
+			<xsd:element name="GetPickUpHistoryResponseContainer" nillable="true" type="tns:GetPickUpHistoryResponseContainer"/>
+			<xsd:complexType name="ArrayOfPickUpDetail">
+				<xsd:sequence>
+					<xsd:element minOccurs="0" maxOccurs="unbounded" name="PickUpDetail" nillable="true" type="tns:PickUpDetail"/>
+				</xsd:sequence>
+			</xsd:complexType>
+			<xsd:element name="ArrayOfPickUpDetail" nillable="true" type="tns:ArrayOfPickUpDetail"/>
+			<xsd:complexType name="PickUpDetail">
+				<xsd:annotation>
+					<xsd:appinfo/>
+					<xsd:documentation>PickUp Detail</xsd:documentation>
+				</xsd:annotation>
+				<xsd:sequence>
+					<xsd:element name="BillingAccountNumber" nillable="true" type="xsd:string">
+						<xsd:annotation>
+							<xsd:appinfo/>
+							<xsd:documentation>BillingAccountNumber - string</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+					<xsd:element name="PartnerId" nillable="true" type="xsd:string">
+						<xsd:annotation>
+							<xsd:appinfo/>
+							<xsd:documentation>PartnerID - string</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+					<xsd:element name="ConfirmationNumber" nillable="true" type="xsd:string">
+						<xsd:annotation>
+							<xsd:appinfo/>
+							<xsd:documentation>ConfirmationNumber - string</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+					<xsd:element name="PickupStatus" nillable="true" type="xsd:string">
+						<xsd:annotation>
+							<xsd:appinfo/>
+							<xsd:documentation>PickupStatus - string</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+					<xsd:element name="PickupType" nillable="true" type="xsd:string">
+						<xsd:annotation>
+							<xsd:appinfo/>
+							<xsd:documentation>PickupType - string</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+					<xsd:element name="PickupInstruction" nillable="true" type="tns:PickupInstruction">
+						<xsd:annotation>
+							<xsd:appinfo/>
+							<xsd:documentation>PickupInstruction - PickupInstruction</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+					<xsd:element name="Address" nillable="true" type="tns:Address">
+						<xsd:annotation>
+							<xsd:appinfo/>
+							<xsd:documentation>Address - Address</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+					<xsd:element name="ShipmentSummary" nillable="true" type="tns:ShipmentSummary">
+						<xsd:annotation>
+							<xsd:appinfo/>
+							<xsd:documentation>ShipmentSummary - ShipmentSummary</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+					<xsd:element name="NotificationEmails" nillable="true" type="q1:ArrayOfstring" xmlns:q1="http://schemas.microsoft.com/2003/10/Serialization/Arrays">
+						<xsd:annotation>
+							<xsd:appinfo/>
+							<xsd:documentation>NotificationEmails - string[]</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+				</xsd:sequence>
+			</xsd:complexType>
+			<xsd:element name="PickUpDetail" nillable="true" type="tns:PickUpDetail"/>
+			<xsd:element name="GetPickUpHistoryResponse" nillable="true" type="tns:GetPickUpHistoryResponseContainer"/>
+			<xsd:complexType name="ModifyPickUpRequestContainer">
+				<xsd:annotation>
+					<xsd:appinfo/>
+					<xsd:documentation>ModifyPickUpRequestContainer</xsd:documentation>
+				</xsd:annotation>
+				<xsd:complexContent mixed="false">
+					<xsd:extension base="tns:RequestContainer">
+						<xsd:sequence>
+							<xsd:element name="BillingAccountNumber" nillable="true" type="xsd:string">
+								<xsd:annotation>
+									<xsd:appinfo/>
+									<xsd:documentation>BillingAccountNumber - string</xsd:documentation>
+								</xsd:annotation>
+							</xsd:element>
+							<xsd:element minOccurs="0" name="ConfirmationNumber" nillable="true" type="xsd:string">
+								<xsd:annotation>
+									<xsd:appinfo/>
+									<xsd:documentation>ConfirmationNumber - string</xsd:documentation>
+								</xsd:annotation>
+							</xsd:element>
+							<xsd:element name="ModifyPickupInstruction" nillable="true" type="tns:ModifyPickupInstruction">
+								<xsd:annotation>
+									<xsd:appinfo/>
+									<xsd:documentation>ModifyPickupInstruction - ModifyPickupInstruction</xsd:documentation>
+								</xsd:annotation>
+							</xsd:element>
+							<xsd:element minOccurs="0" name="ShipmentSummary" nillable="true" type="tns:ShipmentSummary">
+								<xsd:annotation>
+									<xsd:appinfo/>
+									<xsd:documentation>ShipmentSummary - ShipmentSummary</xsd:documentation>
+								</xsd:annotation>
+							</xsd:element>
+						</xsd:sequence>
+					</xsd:extension>
+				</xsd:complexContent>
+			</xsd:complexType>
+			<xsd:element name="ModifyPickUpRequestContainer" nillable="true" type="tns:ModifyPickUpRequestContainer"/>
+			<xsd:complexType name="ModifyPickupInstruction">
+				<xsd:annotation>
+					<xsd:appinfo/>
+					<xsd:documentation>ModifyPickupInstruction</xsd:documentation>
+				</xsd:annotation>
+				<xsd:sequence>
+					<xsd:element name="UntilTime" nillable="true" type="xsd:string">
+						<xsd:annotation>
+							<xsd:appinfo/>
+							<xsd:documentation>String - UntilTime</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+					<xsd:element minOccurs="0" name="PickUpLocation" nillable="true" type="xsd:string">
+						<xsd:annotation>
+							<xsd:appinfo/>
+							<xsd:documentation>String? - PhysicalLocation</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+					<xsd:element minOccurs="0" name="SupplyRequestCodes" nillable="true" type="tns:SupplyRequestCodes">
+						<xsd:annotation>
+							<xsd:appinfo/>
+							<xsd:documentation>SupplyRequestCodes - string[]</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+					<xsd:element minOccurs="0" name="TrailerAccessible" type="xsd:boolean">
+						<xsd:annotation>
+							<xsd:appinfo/>
+							<xsd:documentation>bool - TrailerAccessible</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+					<xsd:element minOccurs="0" name="LoadingDockAvailable" type="xsd:boolean">
+						<xsd:annotation>
+							<xsd:appinfo/>
+							<xsd:documentation>bool - LoadingDockAvailable</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+					<xsd:element minOccurs="0" name="ShipmentOnSkids" type="xsd:boolean">
+						<xsd:annotation>
+							<xsd:appinfo/>
+							<xsd:documentation>bool - ShipmentOnSkids</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+					<xsd:element minOccurs="0" name="NumberOfSkids" nillable="true" type="xsd:int">
+						<xsd:annotation>
+							<xsd:appinfo/>
+							<xsd:documentation>int? - NumberOfSkids</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+				</xsd:sequence>
+			</xsd:complexType>
+			<xsd:element name="ModifyPickupInstruction" nillable="true" type="tns:ModifyPickupInstruction"/>
+			<xsd:element name="ModifyPickUpRequest" nillable="true" type="tns:ModifyPickUpRequestContainer"/>
+			<xsd:complexType name="ModifyPickUpResponseContainer">
+				<xsd:annotation>
+					<xsd:appinfo/>
+					<xsd:documentation>ModifyPickUpResponseContainer</xsd:documentation>
+				</xsd:annotation>
+				<xsd:complexContent mixed="false">
+					<xsd:extension base="tns:ResponseContainer">
+						<xsd:sequence>
+							<xsd:element minOccurs="0" name="PickUpConfirmationNumber" nillable="true" type="xsd:string">
+								<xsd:annotation>
+									<xsd:appinfo/>
+									<xsd:documentation>PickUpConfirmationNumber - string</xsd:documentation>
+								</xsd:annotation>
+							</xsd:element>
+						</xsd:sequence>
+					</xsd:extension>
+				</xsd:complexContent>
+			</xsd:complexType>
+			<xsd:element name="ModifyPickUpResponseContainer" nillable="true" type="tns:ModifyPickUpResponseContainer"/>
+			<xsd:element name="ModifyPickUpResponse" nillable="true" type="tns:ModifyPickUpResponseContainer"/>
+		</xsd:schema>
+		<xsd:schema elementFormDefault="qualified" targetNamespace="http://www.microsoft.com/practices/EnterpriseLibrary/2007/01/wcf/validation" xmlns:tns="http://www.microsoft.com/practices/EnterpriseLibrary/2007/01/wcf/validation">
+			<xsd:complexType name="ValidationFault">
+				<xsd:annotation>
+					<xsd:appinfo/>
+					<xsd:documentation>This class is used to return information to a WCF client when validation fails on a service parameter.</xsd:documentation>
+				</xsd:annotation>
+				<xsd:sequence>
+					<xsd:element minOccurs="0" name="Details" nillable="true" type="q2:ArrayOfValidationDetail" xmlns:q2="http://schemas.datacontract.org/2004/07/Microsoft.Practices.EnterpriseLibrary.Validation.Integration.WCF">
+						<xsd:annotation>
+							<xsd:appinfo/>
+							<xsd:documentation/>
+						</xsd:annotation>
+					</xsd:element>
+				</xsd:sequence>
+			</xsd:complexType>
+			<xsd:element name="ValidationFault" nillable="true" type="tns:ValidationFault"/>
+		</xsd:schema>
+		<xsd:schema elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/Microsoft.Practices.EnterpriseLibrary.Validation.Integration.WCF" xmlns:tns="http://schemas.datacontract.org/2004/07/Microsoft.Practices.EnterpriseLibrary.Validation.Integration.WCF">
+			<xsd:complexType name="ArrayOfValidationDetail">
+				<xsd:sequence>
+					<xsd:element minOccurs="0" maxOccurs="unbounded" name="ValidationDetail" nillable="true" type="tns:ValidationDetail"/>
+				</xsd:sequence>
+			</xsd:complexType>
+			<xsd:element name="ArrayOfValidationDetail" nillable="true" type="tns:ArrayOfValidationDetail"/>
+			<xsd:complexType name="ValidationDetail">
+				<xsd:annotation>
+					<xsd:appinfo/>
+					<xsd:documentation>This class holds the results of a single validation. Effectively, it's the same as a ValidationResult, but creating a separate class allows us to mark up a DataContract with impunity.</xsd:documentation>
+				</xsd:annotation>
+				<xsd:sequence>
+					<xsd:element minOccurs="0" name="Key" nillable="true" type="xsd:string">
+						<xsd:annotation>
+							<xsd:appinfo/>
+							<xsd:documentation>Get or set a name describing the location of the validation result.</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+					<xsd:element minOccurs="0" name="Message" nillable="true" type="xsd:string">
+						<xsd:annotation>
+							<xsd:appinfo/>
+							<xsd:documentation>Get or set a message describing the validation failure.</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+					<xsd:element minOccurs="0" name="Tag" nillable="true" type="xsd:string">
+						<xsd:annotation>
+							<xsd:appinfo/>
+							<xsd:documentation>Get or set a value characterizing the fault.</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+				</xsd:sequence>
+			</xsd:complexType>
+			<xsd:element name="ValidationDetail" nillable="true" type="tns:ValidationDetail"/>
+		</xsd:schema>
+		<xsd:schema elementFormDefault="qualified" targetNamespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" xmlns:tns="http://schemas.microsoft.com/2003/10/Serialization/Arrays">
+			<xsd:complexType name="ArrayOfstring">
+				<xsd:sequence>
+					<xsd:element minOccurs="0" maxOccurs="unbounded" name="string" nillable="true" type="xsd:string"/>
+				</xsd:sequence>
+			</xsd:complexType>
+			<xsd:element name="ArrayOfstring" nillable="true" type="tns:ArrayOfstring"/>
+		</xsd:schema>
+	</wsdl:types>
+	<wsdl:message name="SchedulePickUpRequest">
+		<wsdl:part name="SchedulePickUpRequest" element="q3:SchedulePickUpRequest" xmlns:q3="http://purolator.com/pws/datatypes/v1"/>
+	</wsdl:message>
+	<wsdl:message name="SchedulePickUpRequest_Headers">
+		<wsdl:part name="RequestContext" element="q4:RequestContext" xmlns:q4="http://purolator.com/pws/datatypes/v1"/>
+	</wsdl:message>
+	<wsdl:message name="SchedulePickUpResponse">
+		<wsdl:part name="SchedulePickUpResponse" element="q5:SchedulePickUpResponse" xmlns:q5="http://purolator.com/pws/datatypes/v1"/>
+	</wsdl:message>
+	<wsdl:message name="SchedulePickUpResponse_Headers">
+		<wsdl:part name="ResponseContext" element="q6:ResponseContext" xmlns:q6="http://purolator.com/pws/datatypes/v1"/>
+	</wsdl:message>
+	<wsdl:message name="PickUpServiceContract_SchedulePickUp_ValidationFaultFault_FaultMessage">
+		<wsdl:part name="detail" element="q7:ValidationFault" xmlns:q7="http://www.microsoft.com/practices/EnterpriseLibrary/2007/01/wcf/validation"/>
+	</wsdl:message>
+	<wsdl:message name="VoidPickUpRequest">
+		<wsdl:part name="VoidPickUpRequest" element="q8:VoidPickUpRequest" xmlns:q8="http://purolator.com/pws/datatypes/v1"/>
+	</wsdl:message>
+	<wsdl:message name="VoidPickUpRequest_Headers">
+		<wsdl:part name="RequestContext" element="q9:RequestContext" xmlns:q9="http://purolator.com/pws/datatypes/v1"/>
+	</wsdl:message>
+	<wsdl:message name="VoidPickUpResponse">
+		<wsdl:part name="VoidPickUpResponse" element="q10:VoidPickUpResponse" xmlns:q10="http://purolator.com/pws/datatypes/v1"/>
+	</wsdl:message>
+	<wsdl:message name="VoidPickUpResponse_Headers">
+		<wsdl:part name="ResponseContext" element="q11:ResponseContext" xmlns:q11="http://purolator.com/pws/datatypes/v1"/>
+	</wsdl:message>
+	<wsdl:message name="PickUpServiceContract_VoidPickUp_ValidationFaultFault_FaultMessage">
+		<wsdl:part name="detail" element="q12:ValidationFault" xmlns:q12="http://www.microsoft.com/practices/EnterpriseLibrary/2007/01/wcf/validation"/>
+	</wsdl:message>
+	<wsdl:message name="ValidatePickUpRequest">
+		<wsdl:part name="ValidatePickUpRequest" element="q13:ValidatePickUpRequest" xmlns:q13="http://purolator.com/pws/datatypes/v1"/>
+	</wsdl:message>
+	<wsdl:message name="ValidatePickUpRequest_Headers">
+		<wsdl:part name="RequestContext" element="q14:RequestContext" xmlns:q14="http://purolator.com/pws/datatypes/v1"/>
+	</wsdl:message>
+	<wsdl:message name="ValidatePickUpResponse">
+		<wsdl:part name="ValidatePickUpResponse" element="q15:ValidatePickUpResponse" xmlns:q15="http://purolator.com/pws/datatypes/v1"/>
+	</wsdl:message>
+	<wsdl:message name="ValidatePickUpResponse_Headers">
+		<wsdl:part name="ResponseContext" element="q16:ResponseContext" xmlns:q16="http://purolator.com/pws/datatypes/v1"/>
+	</wsdl:message>
+	<wsdl:message name="PickUpServiceContract_ValidatePickUp_ValidationFaultFault_FaultMessage">
+		<wsdl:part name="detail" element="q17:ValidationFault" xmlns:q17="http://www.microsoft.com/practices/EnterpriseLibrary/2007/01/wcf/validation"/>
+	</wsdl:message>
+	<wsdl:message name="GetPickUpHistoryRequest">
+		<wsdl:part name="GetPickUpHistoryRequest" element="q18:GetPickUpHistoryRequest" xmlns:q18="http://purolator.com/pws/datatypes/v1"/>
+	</wsdl:message>
+	<wsdl:message name="GetPickUpHistoryRequest_Headers">
+		<wsdl:part name="RequestContext" element="q19:RequestContext" xmlns:q19="http://purolator.com/pws/datatypes/v1"/>
+	</wsdl:message>
+	<wsdl:message name="GetPickUpHistoryResponse">
+		<wsdl:part name="GetPickUpHistoryResponse" element="q20:GetPickUpHistoryResponse" xmlns:q20="http://purolator.com/pws/datatypes/v1"/>
+	</wsdl:message>
+	<wsdl:message name="GetPickUpHistoryResponse_Headers">
+		<wsdl:part name="ResponseContext" element="q21:ResponseContext" xmlns:q21="http://purolator.com/pws/datatypes/v1"/>
+	</wsdl:message>
+	<wsdl:message name="PickUpServiceContract_GetPickUpHistory_ValidationFaultFault_FaultMessage">
+		<wsdl:part name="detail" element="q22:ValidationFault" xmlns:q22="http://www.microsoft.com/practices/EnterpriseLibrary/2007/01/wcf/validation"/>
+	</wsdl:message>
+	<wsdl:message name="ModifyPickUpRequest">
+		<wsdl:part name="ModifyPickUpRequest" element="q23:ModifyPickUpRequest" xmlns:q23="http://purolator.com/pws/datatypes/v1"/>
+	</wsdl:message>
+	<wsdl:message name="ModifyPickUpRequest_Headers">
+		<wsdl:part name="RequestContext" element="q24:RequestContext" xmlns:q24="http://purolator.com/pws/datatypes/v1"/>
+	</wsdl:message>
+	<wsdl:message name="ModifyPickUpResponse">
+		<wsdl:part name="ModifyPickUpResponse" element="q25:ModifyPickUpResponse" xmlns:q25="http://purolator.com/pws/datatypes/v1"/>
+	</wsdl:message>
+	<wsdl:message name="ModifyPickUpResponse_Headers">
+		<wsdl:part name="ResponseContext" element="q26:ResponseContext" xmlns:q26="http://purolator.com/pws/datatypes/v1"/>
+	</wsdl:message>
+	<wsdl:message name="PickUpServiceContract_ModifyPickUp_ValidationFaultFault_FaultMessage">
+		<wsdl:part name="detail" element="q27:ValidationFault" xmlns:q27="http://www.microsoft.com/practices/EnterpriseLibrary/2007/01/wcf/validation"/>
+	</wsdl:message>
+	<wsdl:portType name="PickUpServiceContract">
+		<wsdl:documentation>Service Contract Class - PickUpServiceContract</wsdl:documentation>
+		<wsdl:operation name="SchedulePickUp">
+			<wsdl:documentation>
+				SchedulePickUp
+				@param request SchedulePickUpRequest
+				@return SchedulePickUpResponse
+			</wsdl:documentation>
+			<wsdl:input wsaw:Action="http://purolator.com/pws/service/v1/SchedulePickUp" name="SchedulePickUpRequest" message="tns:SchedulePickUpRequest"/>
+			<wsdl:output wsaw:Action="http://purolator.com/pws/service/v1/PickUpServiceContract/SchedulePickUpResponse" name="SchedulePickUpResponse" message="tns:SchedulePickUpResponse"/>
+			<wsdl:fault wsaw:Action="http://purolator.com/pws/service/v1/PickUpServiceContract/SchedulePickUpValidationFaultFault" name="ValidationFaultFault" message="tns:PickUpServiceContract_SchedulePickUp_ValidationFaultFault_FaultMessage"/>
+		</wsdl:operation>
+		<wsdl:operation name="VoidPickUp">
+			<wsdl:documentation>
+				VoidPickUp
+				@param request VoidPickUpRequest
+				@return VoidPickUpResponse
+			</wsdl:documentation>
+			<wsdl:input wsaw:Action="http://purolator.com/pws/service/v1/VoidPickUp" name="VoidPickUpRequest" message="tns:VoidPickUpRequest"/>
+			<wsdl:output wsaw:Action="http://purolator.com/pws/service/v1/PickUpServiceContract/VoidPickUpResponse" name="VoidPickUpResponse" message="tns:VoidPickUpResponse"/>
+			<wsdl:fault wsaw:Action="http://purolator.com/pws/service/v1/PickUpServiceContract/VoidPickUpValidationFaultFault" name="ValidationFaultFault" message="tns:PickUpServiceContract_VoidPickUp_ValidationFaultFault_FaultMessage"/>
+		</wsdl:operation>
+		<wsdl:operation name="ValidatePickUp">
+			<wsdl:documentation>
+				ValidatePickUp
+				@param request ValidatePickUpRequest
+				@return ValidatePickUpResponse
+			</wsdl:documentation>
+			<wsdl:input wsaw:Action="http://purolator.com/pws/service/v1/ValidatePickUp" name="ValidatePickUpRequest" message="tns:ValidatePickUpRequest"/>
+			<wsdl:output wsaw:Action="http://purolator.com/pws/service/v1/PickUpServiceContract/ValidatePickUpResponse" name="ValidatePickUpResponse" message="tns:ValidatePickUpResponse"/>
+			<wsdl:fault wsaw:Action="http://purolator.com/pws/service/v1/PickUpServiceContract/ValidatePickUpValidationFaultFault" name="ValidationFaultFault" message="tns:PickUpServiceContract_ValidatePickUp_ValidationFaultFault_FaultMessage"/>
+		</wsdl:operation>
+		<wsdl:operation name="GetPickUpHistory">
+			<wsdl:documentation>
+				GetPickUpHistory
+				@param request GetPickUpHistoryRequest
+				@return GetPickUpHistoryResponse
+			</wsdl:documentation>
+			<wsdl:input wsaw:Action="http://purolator.com/pws/service/v1/GetPickUpHistory" name="GetPickUpHistoryRequest" message="tns:GetPickUpHistoryRequest"/>
+			<wsdl:output wsaw:Action="http://purolator.com/pws/service/v1/PickUpServiceContract/GetPickUpHistoryResponse" name="GetPickUpHistoryResponse" message="tns:GetPickUpHistoryResponse"/>
+			<wsdl:fault wsaw:Action="http://purolator.com/pws/service/v1/PickUpServiceContract/GetPickUpHistoryValidationFaultFault" name="ValidationFaultFault" message="tns:PickUpServiceContract_GetPickUpHistory_ValidationFaultFault_FaultMessage"/>
+		</wsdl:operation>
+		<wsdl:operation name="ModifyPickUp">
+			<wsdl:documentation>
+				ModifyPickUp
+				@param request ModifyPickUpRequest
+				@return ModifyPickUpResponse
+			</wsdl:documentation>
+			<wsdl:input wsaw:Action="http://purolator.com/pws/service/v1/ModifyPickUp" name="ModifyPickUpRequest" message="tns:ModifyPickUpRequest"/>
+			<wsdl:output wsaw:Action="http://purolator.com/pws/service/v1/PickUpServiceContract/ModifyPickUpResponse" name="ModifyPickUpResponse" message="tns:ModifyPickUpResponse"/>
+			<wsdl:fault wsaw:Action="http://purolator.com/pws/service/v1/PickUpServiceContract/ModifyPickUpValidationFaultFault" name="ValidationFaultFault" message="tns:PickUpServiceContract_ModifyPickUp_ValidationFaultFault_FaultMessage"/>
+		</wsdl:operation>
+	</wsdl:portType>
+	<wsdl:binding name="PickUpServiceEndpoint" type="tns:PickUpServiceContract">
+		<soap:binding transport="http://schemas.xmlsoap.org/soap/http"/>
+		<wsdl:operation name="SchedulePickUp">
+			<soap:operation soapAction="http://purolator.com/pws/service/v1/SchedulePickUp" style="document"/>
+			<wsdl:input name="SchedulePickUpRequest">
+				<soap:header message="tns:SchedulePickUpRequest_Headers" part="RequestContext" use="literal"/>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output name="SchedulePickUpResponse">
+				<soap:header message="tns:SchedulePickUpResponse_Headers" part="ResponseContext" use="literal"/>
+				<soap:body use="literal"/>
+			</wsdl:output>
+			<wsdl:fault name="ValidationFaultFault">
+				<soap:fault name="ValidationFaultFault" use="literal"/>
+			</wsdl:fault>
+		</wsdl:operation>
+		<wsdl:operation name="VoidPickUp">
+			<soap:operation soapAction="http://purolator.com/pws/service/v1/VoidPickUp" style="document"/>
+			<wsdl:input name="VoidPickUpRequest">
+				<soap:header message="tns:VoidPickUpRequest_Headers" part="RequestContext" use="literal"/>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output name="VoidPickUpResponse">
+				<soap:header message="tns:VoidPickUpResponse_Headers" part="ResponseContext" use="literal"/>
+				<soap:body use="literal"/>
+			</wsdl:output>
+			<wsdl:fault name="ValidationFaultFault">
+				<soap:fault name="ValidationFaultFault" use="literal"/>
+			</wsdl:fault>
+		</wsdl:operation>
+		<wsdl:operation name="ValidatePickUp">
+			<soap:operation soapAction="http://purolator.com/pws/service/v1/ValidatePickUp" style="document"/>
+			<wsdl:input name="ValidatePickUpRequest">
+				<soap:header message="tns:ValidatePickUpRequest_Headers" part="RequestContext" use="literal"/>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output name="ValidatePickUpResponse">
+				<soap:header message="tns:ValidatePickUpResponse_Headers" part="ResponseContext" use="literal"/>
+				<soap:body use="literal"/>
+			</wsdl:output>
+			<wsdl:fault name="ValidationFaultFault">
+				<soap:fault name="ValidationFaultFault" use="literal"/>
+			</wsdl:fault>
+		</wsdl:operation>
+		<wsdl:operation name="GetPickUpHistory">
+			<soap:operation soapAction="http://purolator.com/pws/service/v1/GetPickUpHistory" style="document"/>
+			<wsdl:input name="GetPickUpHistoryRequest">
+				<soap:header message="tns:GetPickUpHistoryRequest_Headers" part="RequestContext" use="literal"/>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output name="GetPickUpHistoryResponse">
+				<soap:header message="tns:GetPickUpHistoryResponse_Headers" part="ResponseContext" use="literal"/>
+				<soap:body use="literal"/>
+			</wsdl:output>
+			<wsdl:fault name="ValidationFaultFault">
+				<soap:fault name="ValidationFaultFault" use="literal"/>
+			</wsdl:fault>
+		</wsdl:operation>
+		<wsdl:operation name="ModifyPickUp">
+			<soap:operation soapAction="http://purolator.com/pws/service/v1/ModifyPickUp" style="document"/>
+			<wsdl:input name="ModifyPickUpRequest">
+				<soap:header message="tns:ModifyPickUpRequest_Headers" part="RequestContext" use="literal"/>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output name="ModifyPickUpResponse">
+				<soap:header message="tns:ModifyPickUpResponse_Headers" part="ResponseContext" use="literal"/>
+				<soap:body use="literal"/>
+			</wsdl:output>
+			<wsdl:fault name="ValidationFaultFault">
+				<soap:fault name="ValidationFaultFault" use="literal"/>
+			</wsdl:fault>
+		</wsdl:operation>
+	</wsdl:binding>
+	<wsdl:service name="PickUpService">
+		<wsdl:port name="PickUpServiceEndpoint" binding="tns:PickUpServiceEndpoint">
+			<soap:address location="https://devwebservices.purolator.com/EWS/V1/PickUp/PickUpService.asmx"/>
+		</wsdl:port>
+	</wsdl:service>
+</wsdl:definitions>
